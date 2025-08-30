@@ -33,6 +33,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version> <!-- a more recent version -->
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -40,10 +41,15 @@
       </plugin>
 
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.3.2</version> <!-- Latest stable -->
+      </plugin>
+      
+      <!-- Existing plugins with versions updated -->
+      <plugin>
         <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <autoVersionSubmodules>true</autoVersionSubmodules>
-        </configuration>
+        <version>2.5.3</version>
       </plugin>
 
       <plugin>
@@ -127,9 +133,9 @@
         </plugin>
 
         <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.0</version>
-        </plugin>
+         <artifactId>maven-site-plugin</artifactId>
+         <version>3.9.1</version>
+       </plugin>
 
         <plugin>
           <artifactId>maven-surefire-report-plugin</artifactId>
