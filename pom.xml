@@ -1,16 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-         
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+  
   <modelVersion>4.0.0</modelVersion>
-
-  <!-- Basic project info -->
+  
   <groupId>com.example.maven-project</groupId>
   <artifactId>maven-project</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>maven-project</name>
-  <description>Sample Maven project with SonarQube integration</description>
+  <name>Maven Project</name>
+  <packaging>pom</packaging> <!-- Important: aggregator project, must be 'pom' -->
+  <description>Sample Maven multi-module project with SonarQube integration</description>
   <url>http://example.com</url>
+
+  <!-- Modules -->
+  <modules>
+    <module>server</module>
+    <module>webapp</module>
+  </modules>
 
   <!-- Properties -->
   <properties>
@@ -19,31 +26,26 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
-  
-  <!-- Modules if any -->
-  <modules>
-    <module>server</module>
-    <module>webapp</module>
-  </modules>
-  
-  <!-- Dependency management for plugins and dependencies -->
+
+  <!-- Dependency Management -->
   <dependencyManagement>
     <dependencies>
-      <!-- SonarQube Maven plugin (manage version here) -->
+      <!-- SonarQube Maven plugin -->
       <dependency>
         <groupId>org.sonarsource.scanner.maven</groupId>
         <artifactId>sonar-maven-plugin</artifactId>
-        <version>4.0.0.4121</version>
+        <version>4.0.0.4121</version> <!-- latest, check for updates -->
       </dependency>
       
-      <!-- Add other dependencies like junit, hamcrest, mockito if needed -->
+      <!-- Other dependencies like junit, hamcrest, mockito can be added here if needed -->
     </dependencies>
   </dependencyManagement>
-  
-  <!-- Build configuration -->
+
+  <!-- Build Plugins -->
   <build>
     <plugins>
-      <!-- Maven Compiler Plugin -->
+      
+      <!-- Compiler plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -54,34 +56,34 @@
         </configuration>
       </plugin>
       
-      <!-- SonarQube Maven Plugin -->
+      <!-- SonarQube Maven plugin -->
       <plugin>
         <groupId>org.sonarsource.scanner.maven</groupId>
         <artifactId>sonar-maven-plugin</artifactId>
         <version>4.0.0.4121</version>
       </plugin>
       
-      <!-- Maven War Plugin -->
+      <!-- Maven War Plugin (if web modules) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.3.2</version>
       </plugin>
       
-      <!-- Other plugins like surefire, checkstyle, etc. as needed -->
-      
+      <!-- Additional plugins (e.g., Surefire, Checkstyle) can go here -->
+
     </plugins>
   </build>
-  
-  <!-- Dependencies -->
+
+  <!-- Dependencies (optional, add your dependencies here) -->
   <dependencies>
-    <!-- Example dependencies -->
+    <!-- Example: JUnit for testing -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
-    <!-- Add your dependencies here -->
   </dependencies>
+
 </project>
