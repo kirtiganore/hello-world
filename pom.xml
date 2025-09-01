@@ -1,126 +1,118 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/maven-v4_0_0.xsd">
-  
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+             http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>com.example.maven-project</groupId>
+    <artifactId>maven-project</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging> <!-- Parent aggregator, must be 'pom' -->
+    <name>maven-project</name>
+    <description>Multi-module Maven project with SonarQube integration</description>
+    <url>http://example.com</url>
 
-  <groupId>com.example.maven-project</groupId>
-  <artifactId>maven-project</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <name>maven-project</name>
-  <packaging>pom</packaging> <!-- Important: Parent aggregator project -->
-  <description>Sample multi-module Maven project with SonarQube analysis</description>
+    <!-- Modules -->
+    <modules>
+        <module>server</module>
+        <module>webapp</module>
+    </modules>
 
-  <!-- Modules -->
-  <modules>
-    <module>server</module>
-    <module>webapp</module>
-  </modules>
+    <!-- Properties (define versions once) -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Dependency versions -->
+        <junit.version>4.13.2</junit.version>
+        <hamcrest.version>2.2</hamcrest.version>
+        <mockito.version>4.8.0</mockito.version>
+        <servlet-api.version>2.5</servlet-api.version>
+        <jsp-api.version>2.2</jsp-api.version>
+        <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
+        <jetty.version>8.1.16.v20140903</jetty.version>
+    </properties>
 
-  <!-- Properties for version control -->
-  <properties>
-    <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <!-- Define dependency/plugin versions -->
-    <junit.version>4.13.2</junit.version>
-    <hamcrest.version>2.2</hamcrest.version>
-    <mockito.version>4.8.0</mockito.version>
-    <servlet-api.version>2.5</servlet-api.version>
-    <jsp-api.version>2.2</jsp-api.version>
-    <jetty.version>8.1.16.v20140903</jetty.version>
-    <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
-  </properties>
+    <!-- Dependency Management (version control) -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar-maven-plugin.version}</version>
+            </dependency>
+            <!-- Testing dependencies with explicit versions -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-core</artifactId>
+                <version>${hamcrest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-library</artifactId>
+                <version>${hamcrest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>${jsp-api.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-  <!-- Dependency management -->
-  <dependencyManagement>
+    <!-- Build Plugins -->
+    <build>
+        <plugins>
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <!-- SonarQube Maven Plugin -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar-maven-plugin.version}</version>
+            </plugin>
+            <!-- Maven War Plugin (for web modules) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+            </plugin>
+            <!-- Jetty plugin for local testing (optional) -->
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
+            </plugin>
+            <!-- Additional plugins as needed -->
+        </plugins>
+    </build>
+    
+    <!-- Dependencies (if any specific dependencies are needed at parent level) -->
     <dependencies>
-      <!-- SonarQube Maven plugin dependency -->
-      <dependency>
-        <groupId>org.sonarsource.scanner.maven</groupId>
-        <artifactId>sonar-maven-plugin</artifactId>
-        <version>${sonar-maven-plugin.version}</version>
-      </dependency>
-      <!-- Other dependencies with versions -->
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit-dep</artifactId>
-        <version>${junit.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest-core</artifactId>
-        <version>${hamcrest.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest-library</artifactId>
-        <version>${hamcrest.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>${mockito.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>servlet-api</artifactId>
-        <version>${servlet-api.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>javax.servlet.jsp</groupId>
-        <artifactId>jsp-api</artifactId>
-        <version>${jsp-api.version}</version>
-      </dependency>
+        <!-- Add if needed -->
     </dependencies>
-  </dependencyManagement>
-
-  <!-- Build plugins -->
-  <build>
-    <plugins>
-      <!-- Maven Compiler Plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
-        </configuration>
-      </plugin>
-
-      <!-- SonarQube Maven Plugin -->
-      <plugin>
-        <groupId>org.sonarsource.scanner.maven</groupId>
-        <artifactId>sonar-maven-plugin</artifactId>
-        <version>${sonar-maven-plugin.version}</version>
-      </plugin>
-
-      <!-- Maven War Plugin (for web modules) -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>3.3.2</version>
-      </plugin>
-
-      <!-- Jetty plugin for local testing (optional) -->
-      <plugin>
-        <groupId>org.mortbay.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-        <version>${jetty.version}</version>
-      </plugin>
-
-      <!-- Additional plugins as needed -->
-
-    </plugins>
-  </build>
-
-  <!-- Dependencies can be added explicitly if needed -->
-  <dependencies>
-    <!-- Example dependency -->
-    <!-- add project dependencies here -->
-  </dependencies>
-
 </project>
