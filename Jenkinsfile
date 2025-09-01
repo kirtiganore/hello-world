@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         // Set environment variables
-        SONARQUBE_SERVER = 'My SonarQube' // Name of your SonarQube server configuration in Jenkins
+        SONARQUBE_SERVER = 'sonar-kirti-project' // Name of your SonarQube server configuration in Jenkins
         MAVEN_TOOL = 'Maven 3.8' // Name of your Maven tool in Jenkins global tools
         SONAR_TOKEN = 'sqp_5a895e0b86b84489346eb1c8c783a80731da488a' // Your SonarQube token
     }
